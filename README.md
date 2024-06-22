@@ -1,7 +1,7 @@
-# Sales-Data-Analysis-Using-Python
+# Sample Sales-Data-Analysis-Using-Python
 
 ## Project Overview
-The goal of this project is to analyze the historical sales data of XYZ Company to identify key factors influencing sales performance. This analysis will provide insights and recommendations to enhance sales revenue and profitability.
+The goal of this project is to analyze sample sales historical data of XYZ Company to identify key factors influencing sales performance. This analysis will provide insights and recommendations to enhance sales revenue and profitability.
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -125,9 +125,10 @@ Exploratory Data Analysis (EDA) is a crucial step in any data analysis project. 
 
 For this project, we will analyze the sales data and answer key questions, such as:
 
-- Time Series Analysis
+- **Time Series Analysis:**
   - Analyze sales trends over time.
-    - How do sales vary over time?
+    - How do sales vary over different periods (daily, hourly)?
+
 ```python
 # Group the data by year and sum the sales
 sales_month = sales_data.groupby(sales_data['timestamp'].dt.day)['sales'].sum()
@@ -135,23 +136,32 @@ sales_month = sales_data.groupby(sales_data['timestamp'].dt.day)['sales'].sum()
 # Create the figure and axis
 fig, ax = plt.subplots(figsize=(12, 6))
 
+# Set the background color to white
+fig.patch.set_facecolor('white')
+ax.set_facecolor('white')
+
 # Plot the line chart
-ax.plot(sales_month.index, sales_month.values, color='skyblue', marker='o')
+ax.plot(sales_month.index, sales_month.values, color="skyblue", marker='o')
 
 # Add labels and title
-ax.set_title('Sales Trend Over Time', fontsize=16)
-ax.set_xlabel('Timestamps', fontsize=14)
+ax.set_title('Sales Trend Daily', fontsize=16)
+ax.set_xlabel('Days of the week', fontsize=14)
 ax.set_ylabel('Total Sales', fontsize=14)
-
-# Add grid lines
-#ax.grid(linestyle='-', alpha=0.5)
 
 # Format the x-axis ticks as integers
 ax.xaxis.set_major_formatter('{x:.0f}')
 
 # Add data labels
 for x, y in zip(sales_month.index, sales_month.values):
-    ax.annotate(f'{y:,.0f}', (x, y), textcoords='offset points', xytext=(0, 10), ha='center')
+    ax.annotate(f'{y:,.0f}', (x, y), textcoords='offset points', xytext=(0, 8), ha='center')
+
+# Remove the grid lines
+ax.grid(False)
+
+# Add border to the chart
+for spine in ax.spines.values():
+    spine.set_edgecolor('black')
+    spine.set_linewidth(0.5)
 
 # Adjust the spacing
 plt.subplots_adjust(left=0.1, right=0.95, top=0.9, bottom=0.15)
@@ -159,12 +169,47 @@ plt.subplots_adjust(left=0.1, right=0.95, top=0.9, bottom=0.15)
 # Display the plot
 plt.show()
 ```
+![image](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/7bf9d6b5-36e6-4555-9434-7e31d3ad0b59)
 
-![image](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/883f180f-6cab-491f-ad1f-26e40c8d2cef)
+```python
+# Plot hourly sales
+fig, ax = plt.subplots(figsize=(12, 6))
+
+# Set the background color to white
+fig.patch.set_facecolor('white')
+ax.set_facecolor('white')
+
+sns.lineplot(data=hourly_sales, x='hour', y='sales', marker='o', color="skyblue")
+plt.title('Sales Trend Hourly')
+plt.xlabel('Hour of the Day')
+plt.ylabel('Total Sales')
+
+# Format the x-axis ticks as integers
+ax.xaxis.set_major_formatter('{x:.0f}')
+
+# Add data labels
+for x, y in zip(hourly_sales['hour'], hourly_sales['sales']):
+    ax.annotate(f'{y:,.0f}', (x, y), textcoords='offset points', xytext=(0, 10), ha='center')
+
+# Remove the grid lines
+ax.grid(False)
+
+# Add border to the chart
+for spine in ax.spines.values():
+    spine.set_edgecolor('black')
+    spine.set_linewidth(0.5)
+    
+# Adjust the spacing
+plt.tight_layout()
+
+plt.show()
+```
+![image](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/67146bcd-c06c-471d-8450-6390d84d533c)
+
 
 As part of our EDA, we will explore the factors influencing sales
 
-- Customer Analysis:
+- **Customer Analysis:**
   - Analyze sales performance by customer type.
     - How do sales differ among customer types (e.g., gold, standard, premium, basic)?
 
@@ -185,7 +230,7 @@ plt.show()
 ![image](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/de97309a-776a-4e14-a0c3-881a3456123d)
 
 
-- Product Analysis:
+- **Product Analysis:**
   - Analyze sales performance by product and category.
     - Which product categories have the highest sales? How do individual products perform?
 ```python
@@ -207,7 +252,7 @@ plt.show()
 ![image](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/c62840c3-bfc5-4986-af6b-9e0e175990ba)
 
 
-- Payment Type Analysis:
+- **Payment Type Analysis:**
   - Investigate the impact of payment types on sales.
     - How do different payment methods (e.g., e-wallet, debit card, cash) affect sales?
 ```python
@@ -250,11 +295,10 @@ plt.axis('equal')
 plt.show()
 ```
 
-
 ![image](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/be6cbff6-35e8-40db-901e-d30355786e0b)
 
 
-- Correlation Analysis:
+- **Correlation Analysis:**
   - Identify correlations between different variables.
     - What are the relationships between numerical variables (e.g., unit price, quantity, total sales)?
 ```python
@@ -275,8 +319,8 @@ plt.show()
 
 1. **Time Series Analysis**
    - **Daily Sales Patterns:**
-     - Sales fluctuate noticeably on different days. Specific days of the week may show higher sales, suggesting the influence of weekly shopping habits or promotional events.
-   - Hourly Sales Distribution:
+     - Sales fluctuate noticeably on different days. Specific days of the week show higher sales, suggesting the influence of weekly shopping habits or promotional events.
+   - **Hourly Sales Distribution:**
      - There are clear peaks and troughs in sales at different times of the day. Peak sales hours are identified, which can help optimize staffing and inventory during these times.
 2. **Customer Type Analysis**
    - **Non-Member Sales Dominance:**
@@ -284,7 +328,8 @@ plt.show()
    - **Comparable Performance:**
      - The sales figures for the basic, gold, premium, and standard customer types are fairly close to each other. This indicates a balanced contribution from these segments, with no single membership tier vastly outperforming or underperforming the others.
    - **Potential Growth in Membership Tiers:**
-     - Given the high sales from non-members, there might be an opportunity to convert these non-members into members by offering attractive incentives or benefits. This could lead to increased loyalty and potentially higher sales.3. Product Analysis
+     - Given the high sales from non-members, there might be an opportunity to convert these non-members into members by offering attractive incentives or benefits. This could lead to increased loyalty and potentially higher sales.
+3. **Product Analysis**
    - Sales vary significantly across different product categories. Categories like kitchen, meat, and frozen products are top performers with higher sales volumes. Categories such as spices and herbs, pet food, and snacks have lower sales, indicating potential areas for improvement or reevaluation.
    - **High-Performing Categories:**
      - The highest sales are seen in the kitchen and meat categories, suggesting these are core products for the company. The performance of these categories might be leveraged for targeted promotions and stocking decisions.
@@ -348,20 +393,24 @@ plt.show()
 By implementing these recommendations, XYZ Company can effectively leverage the insights gained from the sales data analysis to enhance operational efficiency, improve customer satisfaction, and drive overall business growth.
 
 ### Data Limitation
-1. **Limited Time Frame**
-  - **Seasonality and Trends:** The dataset covers only 7 days in March 2022, which may not capture the full range of seasonal patterns, trends, or anomalies. Sales data over a longer period is necessary to identify consistent patterns and trends.
+1. **Insufficient dataset**
+  - **Seasonality and Trends:** Our dataset covers only 7 days in March 2022, which may not capture the full range of seasonal patterns, trends, or anomalies. Sales data over a longer period is necessary to identify consistent patterns and trends.
   - **Special Events:** The selected week may include or exclude special events (e.g., holidays, promotions) that could significantly impact sales, leading to skewed analysis.
 2. **Sample Size**
   - **Representativeness:** A week's worth of data may not be representative of the overall sales performance throughout the year. Larger datasets provide a more accurate and reliable analysis.
   - **Variability:** Short-term data can be heavily influenced by random fluctuations or outliers that may not reflect typical business operations.
 
 ### Future Work
-1. **Advanced Customer Segmentation**
-- Conduct a detailed segmentation analysis to identify distinct customer groups based on purchasing behavior, demographics, and preferences.
+1. **Data Collection and Longitudinal Analysis**
+- We will expand our data collection efforts to include a more extended period, ensuring a comprehensive dataset that captures seasonal variations and long-term trends.
+- Conduct a more detailed analysis using this enriched dataset to uncover deeper insights and provide more robust recommendations for XYZ company.
+2. **Advanced Customer Segmentation**
+- We will conduct a detailed segmentation analysis to identify distinct customer groups based on purchasing behavior, demographics, and preferences.
 - Develop personalized marketing strategies and promotions tailored to each segment to enhance customer engagement and loyalty.
-2. **Predictive Analytics for Sales Forecasting**
+3. **Predictive Analytics for Sales Forecasting**
 - Implement machine learning models to predict future sales trends based on historical data, seasonal patterns, and external factors.
 - Use these forecasts for better inventory management, staffing optimization, and strategic planning.
 
 ### References
+[Stack Overflow](https://stackoverflow.com)
 
