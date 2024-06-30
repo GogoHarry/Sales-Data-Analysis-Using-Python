@@ -1,6 +1,11 @@
 # Sample Sales-Data-Analysis-Using-Python
 
 ## Project Overview
+
+![sales](https://github.com/GogoHarry/Sales-Data-Analysis-Using-Python/assets/82883963/21082413-2035-44a5-82d3-2f53d2b58d0f)
+
+
+
 The goal of this project is to analyze sample sales historical data of XYZ Company to identify key factors influencing sales performance. This analysis will provide insights and recommendations to enhance sales revenue and profitability.
 
 ## Table of Contents
